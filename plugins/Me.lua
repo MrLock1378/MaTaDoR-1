@@ -1,7 +1,7 @@
 --Start by MahDiRoO :)
 do
 
-local function matador(msg, matches)
+local function run(msg, matches)
 local uhash = 'user:'..msg.from.id
 local user = redis:hgetall(uhash)
 local um_hash = 'msgs:'..msg.from.id..':'..msg.to.id
@@ -18,6 +18,17 @@ user_info_msgs = tonumber(redis:get(um_hash) or 0)
     else
       return "*υšeяɳαɱҽ:* @"..(check_markdown(msg.from.username) or 'No υʂҽɾɳαɱҽ').."\n*ιԃ:* `"..msg.from.id.."`\n*ɾαɳĸ:* `ɢroυp мeмвer😑`\n*тσтαʅ ɱҽαʂαɠҽʂ:* `"..user_info_msgs.."`"
     end
+			 local user_info = {} 
+  local uhash = 'user:'..data.id_
+  local user = redis:hgetall(uhash)
+  local um_hash = 'msgs:'..data.id_..':'..arg.chat_id
+  user_info_msgs = tonumber(redis:get(um_hash) or 0)
+  text = text..'Total messages : '..user_info_msgs..'\n\n'
+  text = text..' @LockerTeam '
+  tdcli.sendMessage(arg.chat_id, arg.msgid, 0, text, 0, "md")
+   else
+   tdcli.sendMessage(arg.chat_id, "", 0, "*User not found*", 0, "md")
+   end
   end
 end
 
@@ -26,7 +37,7 @@ return {
     "^[!/#]([Mm]e)$",
 	"^([Mm]e)$",
     },
-  run = matador
+  run = run
 }
 end
 --@MahDiRoO
